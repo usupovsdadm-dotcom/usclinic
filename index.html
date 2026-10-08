@@ -133,13 +133,22 @@
 <section class="doctor section" id="doctor">
   <div class="wrap doctor__grid">
     <div class="doctor__media" data-reveal>
-      <div class="doctor__img">
-        <picture data-parallax="-0.08">
-          <source srcset="assets/img/doctor-portrait.webp" type="image/webp">
-          <img src="assets/img/doctor-portrait.jpg" alt="Пластический хирург Саид Дошалович Юсупов" loading="lazy">
-        </picture>
+      <div class="doctor__card tilt">
+        <span class="doctor__border" aria-hidden="true"></span>
+        <div class="doctor__img">
+          <picture data-parallax="-0.08">
+            <source srcset="assets/img/doctor-portrait.webp" type="image/webp">
+            <img src="assets/img/doctor-portrait.jpg" alt="Пластический хирург Саид Дошалович Юсупов" loading="lazy">
+          </picture>
+          <span class="doctor__shine" aria-hidden="true"></span>
+          <span class="doctor__glare" aria-hidden="true"></span>
+        </div>
+        <span class="doctor__corner doctor__corner--tl" aria-hidden="true"></span>
+        <span class="doctor__corner doctor__corner--tr" aria-hidden="true"></span>
+        <span class="doctor__corner doctor__corner--bl" aria-hidden="true"></span>
+        <span class="doctor__corner doctor__corner--br" aria-hidden="true"></span>
+        <div class="doctor__caption" aria-hidden="true"><b>US CLINIC</b><small>Пластический хирург · к.м.н.</small></div>
       </div>
-      <svg class="doctor__frame draw" viewBox="0 0 400 560" preserveAspectRatio="none" aria-hidden="true"><rect x="1" y="1" width="398" height="558" rx="200" ry="200"/></svg>
     </div>
     <div class="doctor__text">
       <p class="eyebrow" data-reveal><span class="eyebrow__line"></span>О докторе</p>
@@ -358,10 +367,10 @@
       <div class="plist" data-p="cosm">
         <div class="prow"><span>Контурная пластика</span><i></i><b>от 8 500 ₽</b></div>
         <div class="prow"><span>Увеличение губ</span><i></i><b>по запросу</b></div>
-        <div class="prow"><span>Ботокс</span><i></i><b>по запросу</b></div>
-        <div class="prow"><span>Биоревитализация</span><i></i><b>по запросу</b></div>
+        <div class="prow"><span>Ботокс<small>препарат Xeomin</small></span><i></i><b>от 18 000 ₽</b></div>
+        <div class="prow"><span>Коллагенотерапия<small>инъекции препаратов на основе коллагена для качества кожи</small></span><i></i><b>25 000 ₽</b></div>
         <div class="prow"><span>Плазмолифтинг</span><i></i><b>по запросу</b></div>
-        <div class="prow"><span>Лазерная шлифовка кожи и рубцов</span><i></i><b>по запросу</b></div>
+        <div class="prow"><span>Лазерная шлифовка кожи и рубцов<small>аппарат Fraxel</small></span><i></i><b>от 15 000 ₽</b></div>
       </div>
       <a href="#booking" class="btn btn--gold magnetic prices__cta"><span>Узнать точную стоимость</span></a>
     </div>
