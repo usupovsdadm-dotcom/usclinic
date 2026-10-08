@@ -1,0 +1,48 @@
+/*
+  ФОТО ДО / ПОСЛЕ
+  Файлы лежат в assets/ba/: <id>-before.(webp|jpg), <id>-after.(webp|jpg) и превью <id>-before-t / <id>-after-t.
+  Чтобы добавить работу: положите файлы и допишите строку { cat: "...", id: "..." }.
+  cat должен совпадать с data-cat вкладки в index.html.
+*/
+window.GALLERY = [
+  { cat: "eyes", id: "eyes-01" },
+  { cat: "eyes", id: "eyes-02" },
+  { cat: "eyes", id: "eyes-03" },
+  { cat: "eyes", id: "eyes-04" },
+  { cat: "eyes", id: "eyes-05" },
+  { cat: "eyes", id: "eyes-06" },
+  { cat: "eyes", id: "eyes-07" },
+  { cat: "eyes", id: "eyes-08" },
+  { cat: "oto", id: "oto-01" },
+  { cat: "oto", id: "oto-02" },
+  { cat: "oto", id: "oto-03" },
+  { cat: "oto", id: "oto-04" },
+  { cat: "oto", id: "oto-05" },
+  { cat: "oto", id: "oto-06" },
+  { cat: "oto", id: "oto-07" },
+  { cat: "oto", id: "oto-08" },
+  { cat: "rhino", id: "rhino-01" },
+  { cat: "rhino", id: "rhino-02" },
+  { cat: "face", id: "face-01" },
+  { cat: "face", id: "face-02" },
+  { cat: "face", id: "face-03" },
+  { cat: "face", id: "face-04" },
+  { cat: "aug", id: "aug-01" },
+  { cat: "aug", id: "aug-02" },
+  { cat: "aug", id: "aug-03" },
+  { cat: "aug", id: "aug-04" },
+  { cat: "aug", id: "aug-05" },
+  { cat: "red", id: "red-01" },
+  { cat: "red", id: "red-02" },
+  { cat: "red", id: "red-03" },
+  { cat: "red", id: "red-04" },
+  { cat: "red", id: "red-05" },
+  { cat: "red", id: "red-06" },
+  { cat: "red", id: "red-07" },
+  { cat: "abdo", id: "abdo-01" },
+  { cat: "abdo", id: "abdo-02" },
+  { cat: "abdo", id: "abdo-03" },
+  { cat: "abdo", id: "abdo-04" },
+  { cat: "abdo", id: "abdo-05" },
+  { cat: "lipo", id: "lipo-01" },
+];
