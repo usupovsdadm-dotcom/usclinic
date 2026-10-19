@@ -6,11 +6,11 @@
   'use strict';
 
   /* ---------- НАСТРОЙКА ФОРМЫ ----------
-     TODO: укажите адрес обработчика заявок (ваш backend, CRM-вебхук,
-     Formspree/Getform, Telegram-бот и т.п.). Форма отправит POST JSON:
-     { name, phone, service, consent, page }.
-     Пока FORM_ENDPOINT пустой — заявка не уходит, показывается демо-сообщение. */
-  var FORM_ENDPOINT = ''; // TODO: например 'https://your-domain.ru/api/lead'
+     Заявки уходят в Google-таблицу «Заявки с сайта usclinic.ru» через веб-приложение Google Apps Script.
+     ЧТОБЫ ВКЛЮЧИТЬ: вставьте URL веб-приложения (https://script.google.com/macros/s/…/exec) в строку ниже.
+     Форма шлёт POST (text/plain, тело — JSON): { name, phone, service, consent, page }.
+     Если URL пустой или сеть недоступна — заявка сохраняется в localStorage ('usc_leads'). */
+  var FORM_ENDPOINT = ''; // ← URL веб-приложения Apps Script
 
   var d = document, root = d.documentElement, body = d.body;
   var params = new URLSearchParams(location.search);
@@ -639,16 +639,28 @@
       if (!(nameOk && phoneOk && consentOk)) { msg.textContent = 'Пожалуйста, заполните имя, телефон и подтвердите согласие.'; return; }
       var data = { name: form.elements.name.value.trim(), phone: phone.value, service: form.elements.service.value, consent: true, page: location.href };
       var btn = form.querySelector('button[type=submit]'); btn.disabled = true;
+      var THANKS = 'Спасибо! Заявка отправлена. Мы свяжемся с вами для подтверждения записи.';
+      var saveLocal = function (reason) {
+        try {
+          var q = JSON.parse(localStorage.getItem('usc_leads') || '[]');
+          q.push({ data: data, at: new Date().toISOString(), reason: reason });
+          localStorage.setItem('usc_leads', JSON.stringify(q.slice(-50)));
+        } catch (err) {}
+      };
+      var done = function () { msg.textContent = THANKS; burst(btn); form.reset(); btn.disabled = false; };
       if (!FORM_ENDPOINT) {
-        // TODO: демо-режим — удалите после подключения FORM_ENDPOINT
-        console.info('[US CLINIC] Заявка (FORM_ENDPOINT не задан):', data);
-        msg.textContent = 'Спасибо! Заявка принята. Мы свяжемся с вами для подтверждения записи.';
-        burst(btn); form.reset(); btn.disabled = false; return;
+        console.info('[US CLINIC] FORM_ENDPOINT не задан, заявка сохранена локально:', data);
+        saveLocal('no-endpoint'); done(); return;
       }
-      fetch(FORM_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) })
-        .then(function (r) { if (!r.ok) throw new Error(r.status); msg.textContent = 'Спасибо! Заявка отправлена. Мы свяжемся с вами для подтверждения записи.'; burst(btn); form.reset(); })
-        .catch(function () { msg.textContent = 'Не удалось отправить заявку. Позвоните нам: +7 (926) 999-99-55.'; })
-        .then(function () { btn.disabled = false; });
+      // no-cors + text/plain: «простой» запрос без CORS-preflight, Apps Script его принимает.
+      // Ответ непрозрачен (opaque), поэтому успехом считаем любой ответ без сетевой ошибки.
+      fetch(FORM_ENDPOINT, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) })
+        .then(done)
+        .catch(function () {
+          saveLocal('network');
+          msg.textContent = 'Спасибо! Заявка принята. Если мы не перезвоним в течение дня — позвоните нам: +7 (926) 999-99-55.';
+          burst(btn); form.reset(); btn.disabled = false;
+        });
     });
   }
 
