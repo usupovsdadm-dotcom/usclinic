@@ -200,7 +200,6 @@
     var y = window.scrollY, vh = window.innerHeight, h = root.scrollHeight - vh, p = h > 0 ? y / h : 0;
     var dy = y - lastY;
     hdr.classList.toggle('is-scrolled', y > 40);
-    if (!body.classList.contains('is-locked')) hdr.classList.toggle('is-hidden', y > 600 && dy > 4);
     if (dy < -4) hdr.classList.remove('is-hidden');
     if (dy !== 0) { mq.dir = dy > 0 ? -1 : 1; mq.boost = Math.min(700, mq.boost + Math.abs(dy) * 5); }
     lastY = y;
