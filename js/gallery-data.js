@@ -21,7 +21,7 @@ window.GALLERY = [
   { cat: "oto", id: "oto-06" },
   { cat: "oto", id: "oto-07" },
   { cat: "oto", id: "oto-08" },
-  { cat: "rhino", id: "rhino-01" },
+  { cat: "rhino", id: "rhino-01s" },
   { cat: "rhino", id: "rhino-02" },
   { cat: "face", id: "face-01" },
   { cat: "face", id: "face-02" },
