@@ -497,6 +497,15 @@
       self.set(fromEvent(e));
     });
     ['pointerup', 'pointercancel', 'lostpointercapture'].forEach(function (t) { el.addEventListener(t, function () { dragging = false; el.classList.remove('is-drag'); }); });
+    /* iOS Safari: touch fallback — horizontal drag moves the line, vertical drag scrolls the page */
+    var tx = 0, ty = 0, tlock = 0;
+    el.addEventListener('touchstart', function (e) { var t = e.touches[0]; tx = t.clientX; ty = t.clientY; tlock = 0; el.classList.add('is-touched'); }, { passive: true });
+    el.addEventListener('touchmove', function (e) {
+      var t = e.touches[0], dx = Math.abs(t.clientX - tx), dy = Math.abs(t.clientY - ty);
+      if (!tlock) { if (dx > 5 && dx >= dy) tlock = 1; else if (dy > 6) tlock = 2; }
+      if (tlock === 1) { if (e.cancelable) e.preventDefault(); el.classList.add('is-drag'); self.set(fromEvent(t)); }
+    }, { passive: false });
+    el.addEventListener('touchend', function () { tlock = 0; el.classList.remove('is-drag'); }, { passive: true });
     el.addEventListener('keydown', function (e) {
       if (e.key === 'ArrowLeft') { self.set(target - 5); e.preventDefault(); el.classList.add('is-touched'); }
       if (e.key === 'ArrowRight') { self.set(target + 5); e.preventDefault(); el.classList.add('is-touched'); }

@@ -23,3 +23,4 @@ html,body{background:#0b0a09}
 .ht__lines{contain:strict}
 .ht__cv{z-index:2}
 .anim-off,.anim-off *,.anim-off::before{animation-play-state:paused!important}
+.cmp,.cmp *{touch-action:pan-y}.cmp img{-webkit-user-drag:none;user-drag:none;pointer-events:none}.cmp__handle b{position:absolute}.cmp__handle b::before{content:"";position:absolute;inset:-22px;border-radius:50%}
