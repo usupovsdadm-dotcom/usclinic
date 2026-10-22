@@ -13,3 +13,7 @@ body{overflow-x:clip}
 @media (max-width:760px){.htw .hero__frame{-webkit-mask-image:linear-gradient(180deg,transparent 0,#000 9%,#000 85%,transparent 100%),linear-gradient(90deg,transparent 0,#000 16%,#000 84%,transparent 100%);-webkit-mask-composite:source-in;mask-image:linear-gradient(180deg,transparent 0,#000 9%,#000 85%,transparent 100%),linear-gradient(90deg,transparent 0,#000 16%,#000 84%,transparent 100%);mask-composite:intersect}}
 .hdr,.hdr.is-hidden{transform:none!important;z-index:1000}
 @media (max-width:760px){.htw .hero{padding-top:var(--hdr-h,72px)}}
+@media (max-width:760px){
+.htw .hero__shade{background:linear-gradient(0deg,var(--bg) 0%,rgba(11,10,9,.4) 9%,rgba(11,10,9,0) 20%)}
+.htw .hero__content{margin-top:0}
+}
