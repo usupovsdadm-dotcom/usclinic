@@ -14,3 +14,4 @@ body{overflow-x:clip}
 .hdr,.hdr.is-hidden{transform:none!important;z-index:1000}
 @media (max-width:760px){.htw .hero{padding-top:var(--hdr-h,72px)}}
 @media (max-width:768px){.marquee{display:none!important}.marquee__track{animation:none!important}}
+@media (max-width:760px){.htw .hero__shade{background:linear-gradient(0deg,var(--bg) 0%,rgba(11,10,9,.55) 20%,rgba(11,10,9,0) 43%),linear-gradient(180deg,rgba(11,10,9,.55),rgba(11,10,9,0) 24%)}}
