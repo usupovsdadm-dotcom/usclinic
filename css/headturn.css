@@ -17,3 +17,4 @@ body{overflow-x:clip}
 .htw .hero__shade{background:linear-gradient(0deg,var(--bg) 0%,rgba(11,10,9,.4) 9%,rgba(11,10,9,0) 20%)}
 .htw .hero__content{margin-top:0}
 }
+@media (max-width:768px){.marquee{display:none!important}.marquee__track{animation:none!important}}

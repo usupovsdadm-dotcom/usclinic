@@ -394,7 +394,7 @@
 
   /* ---------- бегущая строка, реагирующая на скорость скролла ---------- */
   var mqTrack = d.querySelector('.marquee__track'), mqMeasure = function () {};
-  if (mqTrack && !reduce) {
+  if (mqTrack && !reduce && !window.matchMedia('(max-width: 768px)').matches) {
     mqTrack.classList.add('is-js');
     var mqX = 0, mqHalf = 0, mqOn = false, mqLast = 0;
     mqMeasure = function () { mqHalf = mqTrack.scrollWidth / 2; };
