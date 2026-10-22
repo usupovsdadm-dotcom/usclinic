@@ -220,9 +220,9 @@
       });
       /* hero уходит в глубину: текст поднимается и гаснет, кадр приближается и темнеет */
       if (heroEl && window.innerWidth > 760) {
-        var hh = heroEl.offsetHeight, q = clamp(y / hh, 0, 1);
+        var hw = d.getElementById('htw'), hs = hw ? Math.max(0, hw.offsetHeight - heroEl.offsetHeight) : 0; var hh = heroEl.offsetHeight, q = clamp(Math.max(0, y - hs) / hh, 0, 1);
         if (q < 1 || !heroOutDone) {
-          heroContent.style.transform = 'translate3d(0,' + (-y * 0.22).toFixed(1) + 'px,0)';
+          heroContent.style.transform = 'translate3d(0,' + (-Math.max(0, y - hs) * 0.22).toFixed(1) + 'px,0)';
           heroContent.style.opacity = (1 - clamp(q * 1.25, 0, 1)).toFixed(3);
           heroDim.style.opacity = (q * 0.75).toFixed(3);
           if (heroPic) heroPic.style.transform = 'scale(' + (1 + q * 0.08).toFixed(4) + ')';

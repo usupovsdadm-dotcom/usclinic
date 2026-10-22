@@ -21,6 +21,7 @@
 <link rel="preload" href="assets/fonts/cormorant.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/manrope.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="css/style.css?v=4">
+<link rel="stylesheet" href="css/headturn.css?v=20261023">
 <script>
 /* JS включён → включаем анимации; если main.js не запустился — через 7 с показываем всё как есть */
 (function(h){h.className+=' js';try{if(sessionStorage.getItem('usc-seen'))h.className+=' pl-fast'}catch(e){}
@@ -92,24 +93,24 @@ setTimeout(function(){if(dcl)fb();else document.addEventListener('DOMContentLoad
 <main id="top">
 
 <!-- ============ HERO ============ -->
+<div class="htw" id="htw">
 <section class="hero" id="hero">
   <div class="hero__media" aria-hidden="true">
     <div class="hero__frame" data-parallax="0.12">
-      <picture>
-        <source media="(max-width: 760px)" srcset="assets/img/hero-doctor-m.webp?v=20261019" type="image/webp">
-        <source media="(max-width: 760px)" srcset="assets/img/hero-doctor-m.jpg?v=20261019">
-        <source srcset="assets/img/hero-doctor.webp?v=20261019" type="image/webp">
-        <img src="assets/img/hero-doctor.jpg?v=20261019" alt="" class="hero__img" fetchpriority="high">
-      </picture>
-      <svg class="hero__rings" viewBox="0 0 1920 1080" preserveAspectRatio="xMidYMid slice">
+      <div class="ht__bg"></div>
+      <svg class="ht__lines" viewBox="0 0 1244 1660" preserveAspectRatio="xMidYMin slice">
         <defs>
           <linearGradient id="gGold" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stop-color="#f4e4bf"/><stop offset=".45" stop-color="#c9a96e"/><stop offset="1" stop-color="#8c6a3a"/>
+            <stop offset="0" stop-color="#f4e4bf"/><stop offset=".45" stop-color="#c9a96e"/><stop offset="1" stop-color="#8c6a3a" stop-opacity=".35"/>
           </linearGradient>
         </defs>
-        <circle class="ring ring--a" cx="988" cy="392" r="452" />
-        <circle class="ring ring--b" cx="988" cy="392" r="508" />
+        <ellipse class="ht__back" cx="640" cy="560" rx="560" ry="515" transform="rotate(-14 640 560)"/>
+        <g transform="rotate(10 610 540)">
+          <ellipse class="ht__front" cx="610" cy="540" rx="430" ry="400"/>
+          <circle class="ht__dot" id="htDot" cx="1040" cy="540" r="6"/>
+        </g>
       </svg>
+      <canvas class="ht__cv" id="htCv" width="1080" height="1441"></canvas>
       <span class="hero__edge"></span>
     </div>
     <div class="hero__shade"></div>
@@ -138,6 +139,7 @@ setTimeout(function(){if(dcl)fb();else document.addEventListener('DOMContentLoad
 
   <a href="#doctor" class="scrollcue" aria-label="Листать вниз"><span>Листайте</span><i></i></a>
 </section>
+</div>
 
 <!-- ============ MARQUEE ============ -->
 <div class="marquee" aria-hidden="true">
@@ -486,5 +488,6 @@ setTimeout(function(){if(dcl)fb();else document.addEventListener('DOMContentLoad
 <script src="js/gallery-data.js"></script>
 <script src="js/vendor/lenis.min.js?v=4" defer></script>
 <script src="js/main.js?v=5" defer></script>
+<script src="js/headturn.js?v=20261023" defer></script>
 </body>
 </html>
