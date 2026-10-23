@@ -211,6 +211,7 @@
     }
     if (!reduce) {
       plx.forEach(function (el) {
+        if (window.innerWidth <= 760 && el.closest('.hero')) { el.style.transform = ''; return; }
         var r = el.parentElement.getBoundingClientRect();
         if (r.bottom < -200 || r.top > vh + 200) return;
         var k = parseFloat(el.getAttribute('data-parallax')) || 0.1;
