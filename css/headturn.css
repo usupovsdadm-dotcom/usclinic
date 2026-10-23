@@ -26,8 +26,8 @@ html,body{background:#0b0a09}
 .cmp,.cmp *{touch-action:pan-y}.cmp img{-webkit-user-drag:none;user-drag:none;pointer-events:none}.cmp__handle b{position:absolute}.cmp__handle b::before{content:"";position:absolute;inset:-22px;border-radius:50%}
 /* fix: iOS drops mask on transformed frame after scroll-up -> hard edge. Mobile: no frame transform, fade also on each layer + wrapper */
 @media (max-width:760px){.htw .hero__frame{transform:none!important;will-change:auto}
-.htw .ht__cv,.htw .ht__bg,.htw .ht__lines{-webkit-mask-image:linear-gradient(180deg,#000 62%,transparent 88%);mask-image:linear-gradient(180deg,#000 62%,transparent 88%)}
-.htw .hero__media{-webkit-mask-image:linear-gradient(180deg,#000 66%,transparent 88%);mask-image:linear-gradient(180deg,#000 66%,transparent 88%)}}
+.htw .ht__cv,.htw .ht__bg,.htw .ht__lines{-webkit-mask-image:linear-gradient(180deg,#000 72%,transparent 97%);mask-image:linear-gradient(180deg,#000 72%,transparent 97%)}
+.htw .hero__media{-webkit-mask-image:linear-gradient(180deg,#000 80%,transparent 100%);mask-image:linear-gradient(180deg,#000 80%,transparent 100%)}}
 /* fix: text flicker on scroll-up (mobile): stable composited text layers, no transitions after reveal */
 @media (max-width:760px){
 .js [data-reveal]{filter:none!important}.split .w>span,[data-reveal]{-webkit-backface-visibility:hidden;backface-visibility:hidden}
