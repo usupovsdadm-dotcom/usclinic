@@ -32,3 +32,5 @@ html,body{background:#0b0a09}
 .hdr{transition:background .3s!important}.btn--ghost{-webkit-backdrop-filter:none;backdrop-filter:none}}
 @media (max-width:760px){.gold-text,.split.gold-text .w>span{background:none!important;-webkit-background-clip:border-box!important;background-clip:border-box!important;color:#d9bd85!important;-webkit-text-fill-color:#d9bd85!important;animation:none!important}
 .btn--gold{animation:none!important;background-position:0 0!important}.btn--gold::after{display:none}}
+/* desktop: keep full head+shoulders on wide/short screens (frame aspect close to portrait) */
+@media (min-width:981px){.htw .hero__frame{width:min(72%,calc(var(--hero-h,100vh)*.86))}}
