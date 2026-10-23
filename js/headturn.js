@@ -7,7 +7,7 @@ function paint(){var j=get(Math.round(shown));if(j<0||j===cur)return;cx.clearRec
 function step(){raf=0;var t=prog()*(N-1),d=t-shown;shown=Math.abs(d)<.3?t:shown+d*.25;paint();if(shown!==t)raf=requestAnimationFrame(step)}
 function kick(){if(!raf)raf=requestAnimationFrame(step)}
 addEventListener('scroll',kick,{passive:true});addEventListener('resize',function(){kick();lay()},{passive:true});
-function load(i){var im=new Image();im.decoding='async';im.src=base+String(i+1).padStart(3,'0')+'.webp?v=1';
+function load(i){var im=new Image();im.decoding='async';im.src=base+String(i+1).padStart(3,'0')+'.webp?v=2';
  return (im.decode?im.decode():new Promise(function(r){im.onload=r})).then(function(){return window.createImageBitmap?createImageBitmap(im):im}).then(function(b){fr[i]=b;if(Math.abs(i-shown)<1.5||i===0){cur=-1;paint()}}).catch(function(){fr[i]=im})}
 load(0).then(function(){var k=1;(function next(){if(k>=N)return;var a=[];for(var n=0;n<4&&k<N;n++,k++)a.push(load(k));Promise.all(a).then(next)})();kick()});
 /* rolling dot: composited transform only */
