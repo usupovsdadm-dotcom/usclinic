@@ -391,8 +391,8 @@ setTimeout(function(){if(dcl)fb();else document.addEventListener('DOMContentLoad
       <h2 class="h2"><span class="split">Записаться</span> <span class="split gold-text it">на консультацию</span></h2>
 
       <!--
-        ФОРМА ЗАЯВКИ. Бэкенда нет — подключите отправку в js/main.js,
-        константа FORM_ENDPOINT (TODO). Поля: name, phone, service, consent.
+        ФОРМА ЗАЯВКИ. Отправка в js/main.js (FORM_ENDPOINT → Google Apps Script).
+        Поля: name, phone, service, consent; в запрос также уходит page.
       -->
       <form class="form" id="bookingForm" novalidate data-reveal>
         <label class="field"><input type="text" name="name" required autocomplete="name" placeholder=" "><span>Ваше имя</span></label>
@@ -487,7 +487,7 @@ setTimeout(function(){if(dcl)fb();else document.addEventListener('DOMContentLoad
 
 <script src="js/gallery-data.js?v=20261023u"></script>
 <script src="js/vendor/lenis.min.js?v=4" defer></script>
-<script src="js/main.js?v=20261023u" defer></script>
+<script src="js/main.js?v=20261109" defer></script>
 <script src="js/headturn.js?v=20261023u" defer></script>
 </body>
 </html>

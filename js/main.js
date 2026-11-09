@@ -7,10 +7,10 @@
 
   /* ---------- НАСТРОЙКА ФОРМЫ ----------
      Заявки уходят в Google-таблицу «Заявки с сайта usclinic.ru» через веб-приложение Google Apps Script.
-     ЧТОБЫ ВКЛЮЧИТЬ: вставьте URL веб-приложения (https://script.google.com/macros/s/…/exec) в строку ниже.
-     Форма шлёт POST (text/plain, тело — JSON): { name, phone, service, consent, page }.
-     Если URL пустой или сеть недоступна — заявка сохраняется в localStorage ('usc_leads'). */
-  var FORM_ENDPOINT = ''; // ← URL веб-приложения Apps Script
+     POST (text/plain, тело — JSON): { name, phone, service, consent, page }.
+     mode no-cors: Apps Script не отдаёт CORS-заголовки, ответ непрозрачный — успехом считаем запрос без сетевой ошибки.
+     Если сеть недоступна, копия остаётся в localStorage ('usc_leads'), на экране — телефон и почта клиники. */
+  var FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwHse2zTwEQa1R6M2UUxLbbWU5F-d0os30lrREKD1ERfOowr2IuB8bdRwaMG6q8SPc/exec';
 
   var d = document, root = d.documentElement, body = d.body;
   var params = new URLSearchParams(location.search);
@@ -631,9 +631,11 @@
   }
 
   /* ---------- форма ---------- */
-  var form = d.getElementById('bookingForm');
-  if (form) {
-    var phone = form.elements.phone, msg = form.querySelector('.form__msg');
+  var FAIL_MSG = 'Не удалось отправить заявку. Позвоните нам: +7 (926) 999-99-55 или напишите на usclinic@bk.ru.';
+  d.querySelectorAll('form').forEach(function (form) {
+    var phone = form.elements.phone, nameInput = form.elements.name, consentInput = form.elements.consent;
+    var msg = form.querySelector('.form__msg');
+    if (!phone || !nameInput || !consentInput || !msg) return;
     phone.addEventListener('input', function () {
       var v = phone.value.replace(/\D/g, '');
       if (!v) { phone.value = ''; return; }
@@ -649,15 +651,17 @@
     });
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var nameOk = form.elements.name.value.trim().length > 1;
+      var nameOk = nameInput.value.trim().length > 1;
       var phoneOk = phone.value.replace(/\D/g, '').length === 11;
-      var consentOk = form.elements.consent.checked;
-      form.elements.name.closest('.field').classList.toggle('is-error', !nameOk);
-      phone.closest('.field').classList.toggle('is-error', !phoneOk);
-      form.querySelector('.check').classList.toggle('is-error', !consentOk);
+      var consentOk = consentInput.checked;
+      var nameField = nameInput.closest('.field'), phoneField = phone.closest('.field'), check = form.querySelector('.check');
+      if (nameField) nameField.classList.toggle('is-error', !nameOk);
+      if (phoneField) phoneField.classList.toggle('is-error', !phoneOk);
+      if (check) check.classList.toggle('is-error', !consentOk);
       if (!(nameOk && phoneOk && consentOk)) { msg.textContent = 'Пожалуйста, заполните имя, телефон и подтвердите согласие.'; return; }
-      var data = { name: form.elements.name.value.trim(), phone: phone.value, service: form.elements.service.value, consent: true, page: location.href };
-      var btn = form.querySelector('button[type=submit]'); btn.disabled = true;
+      var serviceEl = form.elements.service;
+      var data = { name: nameInput.value.trim(), phone: phone.value, service: serviceEl ? serviceEl.value : '', consent: true, page: location.href };
+      var btn = form.querySelector('button[type=submit]'); if (btn) btn.disabled = true;
       var THANKS = 'Спасибо! Заявка отправлена. Мы свяжемся с вами для подтверждения записи.';
       var saveLocal = function (reason) {
         try {
@@ -666,22 +670,16 @@
           localStorage.setItem('usc_leads', JSON.stringify(q.slice(-50)));
         } catch (err) {}
       };
-      var done = function () { msg.textContent = THANKS; burst(btn); form.reset(); btn.disabled = false; };
-      if (!FORM_ENDPOINT) {
-        console.info('[US CLINIC] FORM_ENDPOINT не задан, заявка сохранена локально:', data);
-        saveLocal('no-endpoint'); done(); return;
-      }
+      var done = function () { msg.textContent = THANKS; burst(btn); form.reset(); if (btn) btn.disabled = false; };
+      var fail = function (reason) { saveLocal(reason); msg.textContent = FAIL_MSG; if (btn) btn.disabled = false; };
+      if (!FORM_ENDPOINT) { fail('no-endpoint'); return; }
       // no-cors + text/plain: «простой» запрос без CORS-preflight, Apps Script его принимает.
       // Ответ непрозрачен (opaque), поэтому успехом считаем любой ответ без сетевой ошибки.
       fetch(FORM_ENDPOINT, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) })
         .then(done)
-        .catch(function () {
-          saveLocal('network');
-          msg.textContent = 'Спасибо! Заявка принята. Если мы не перезвоним в течение дня — позвоните нам: +7 (926) 999-99-55.';
-          burst(btn); form.reset(); btn.disabled = false;
-        });
+        .catch(function () { fail('network'); });
     });
-  }
+  });
 
   /* ---------- пересчёт раскладки ---------- */
   function relayout() {

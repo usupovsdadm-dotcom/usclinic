@@ -8,7 +8,7 @@
 ```
 index.html            — вся разметка и тексты (разделы: hero, о докторе, услуги, до/после, цены, запись, футер)
 css/style.css         — стили и анимации
-js/main.js            — анимации, слайдер до/после, лайтбокс, вкладки, форма (FORM_ENDPOINT)
+js/main.js            — анимации, слайдер до/после, лайтбокс, вкладки, форма (отправка в Google Apps Script)
 js/gallery-data.js    — список фото «до/после» по категориям
 assets/fonts/         — Cormorant Garamond + Manrope (woff2, латиница + кириллица)
 assets/img/           — фото доктора, иллюстрации услуг, логотип, иконки
@@ -26,23 +26,26 @@ assets/favicon.ico, favicon-32.png, apple-touch-icon.png, icon-512.png, og-image
 2. Включите HTTPS и gzip/brotli. Для `assets/` полезно задать долгий кэш.
 3. Локальная проверка: `python3 -m http.server 8080` в папке сайта, затем откройте http://localhost:8080
 
-## Форма заявки (важно)
+## Форма заявки
 
-Бэкенда нет. В `js/main.js` в самом верху есть константа:
+Заявки уходят в Google-таблицу «Заявки с сайта usclinic.ru» через веб-приложение Google Apps Script.
+URL задан в `js/main.js` (`FORM_ENDPOINT`):
 
-```js
-var FORM_ENDPOINT = ''; // TODO
+```
+https://script.google.com/macros/s/AKfycbwHse2zTwEQa1R6M2UUxLbbWU5F-d0os30lrREKD1ERfOowr2IuB8bdRwaMG6q8SPc/exec
 ```
 
-Укажите URL обработчика: свой API, вебхук CRM (amoCRM, Bitrix24), Formspree, Telegram-бот и т.п.
-Форма отправляет `POST` с `Content-Type: application/json`:
+Форма отправляет `POST` с `Content-Type: text/plain;charset=utf-8` и `mode: 'no-cors'`
+(у Apps Script нет CORS-заголовков для JSON-preflight; ответ непрозрачный, успехом считается запрос без сетевой ошибки).
+Телефон обязателен. Тело — JSON:
 
 ```json
 { "name": "...", "phone": "+7 (9xx) xxx-xx-xx", "service": "...", "consent": true, "page": "https://..." }
 ```
 
-Пока `FORM_ENDPOINT` пустой, заявка никуда не уходит: пользователь видит сообщение «Спасибо», а данные пишутся в консоль браузера.
-Если обработчику нужен другой формат (например `FormData`), поправьте `fetch(...)` в том же файле.
+Сообщение «Спасибо» показывается только после того, как запрос ушёл.
+Если сеть недоступна, посетитель видит ошибку и запасные контакты (телефон и почта),
+а копия заявки остаётся в `localStorage` (`usc_leads`).
 
 ## Что ещё нужно доделать
 
